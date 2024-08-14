@@ -1,6 +1,9 @@
-package com.brambles;
+package com.brambles.attempt1;
+
+import com.brambles.Stuff;
 
 import java.util.function.Function;
+
 import static com.brambles.Stuff.*;
 
 public class Main {
@@ -26,12 +29,7 @@ public class Main {
 
             for (double[] example : rClouds_cRain) {
 
-                loss_w = (w1) -> {
-                    //System.out.println("Loss calculation:");
-                    //System.out.println(w1 + " * " + example[0] + " + " + b.value + " - " + example[1] + " )^2");
-                    //System.out.println(Math.pow(w1 * example[0] + b.value - example[1], 2));
-                    return Math.pow(w1 * example[0] + b.value - example[1], 2);
-                };
+                loss_w = (w1) -> Math.pow(w1 * example[0] + b.value - example[1], 2);
                 loss_b = (b1) -> Math.pow(w.value * example[0] + b1 - example[1], 2);
                 gradient_w = derivative(loss_w);
                 gradient_b = derivative(loss_b);
