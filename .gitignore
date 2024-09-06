@@ -3,14 +3,11 @@ target/
 !**/src/main/**/target/
 !**/src/test/**/target/
 
-src/main/python
-src/main/java/com/brambles/attempt4
+src/main/python/other_stuff
+outputs
 
 ### IntelliJ IDEA ###
-.idea/modules.xml
-.idea/jarRepositories.xml
-.idea/compiler.xml
-.idea/libraries/
+.idea
 *.iws
 *.iml
 *.ipr

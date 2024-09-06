@@ -123,8 +123,8 @@ class Neuron {
 
 public class M2 {
     public static void main(String[] args) {
-        Dataset trainingData = circleDataSet(150, 2.5, 1, 0);
-        Dataset testingData  = circleDataSet(50, 2.5, 1, 0);
+        Dataset trainingData = circleDataSet(0, 150, 2.5, 1, 0);
+        Dataset testingData  = circleDataSet(0, 50, 2.5, 1, 0);
 
         NeuralNetwork nn = new NeuralNetwork(
                 0.03f,
