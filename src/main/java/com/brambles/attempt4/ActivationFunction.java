@@ -20,6 +20,16 @@ public enum ActivationFunction {
     ),
     SOFT_MAX(
             (sums, index) -> {
+                double max_logit_val = sums[0];
+
+                for (int i = 1; i < sums.length; ++i) {
+                    if (sums[i] > max_logit_val)
+                        max_logit_val = sums[i];
+                }
+
+                for (int i = 0; i < sums.length; ++i)
+                    sums[i] -= max_logit_val;
+
                 double numerator = exp(sums[index]);
                 double denominator = Arrays.stream(sums).map(Math::exp).sum();
                 return numerator / denominator;

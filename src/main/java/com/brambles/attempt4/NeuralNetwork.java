@@ -30,20 +30,11 @@ public class NeuralNetwork {
         return lossFunction.apply(outputs, desiredOutputs);
     }
 
-    public double calculateCost(double[][] dataset, double[][] labels) {
-        double cost = 0;
-
-        for (int i = 0; i < dataset.length; ++i)
-            cost += calculateSingleLoss(dataset[i], labels[i]);
-
-        return cost / dataset.length;
-    }
-
     public double calculateCost(Example[] dataset) {
         double cost = 0;
 
-        for (Example example : dataset)
-            cost += calculateSingleLoss(example.getFeatures(), example.getLabels());
+        for (int i = 0; i < Math.log(dataset.length); ++i)
+            cost += calculateSingleLoss(dataset[i].getFeatures(), dataset[i].getLabels());
 
         return cost;
     }
@@ -84,23 +75,6 @@ public class NeuralNetwork {
         }
     }
 
-    /**
-     * @return (dc/ds)[], an array of cost derivatives with respect to the weighted sum for each output node
-     */
-    public double[] firstCostDerivStep(double[] expectedOutputs) {
-        double[] partialDerivs = new double[expectedOutputs.length];
-        Layer outputLayer = layers.getLast();
-
-        for (int i = 0; i < partialDerivs.length; ++i) {
-            // Find how much the cost changes by the change in the activation and how much the activation changes by a change in the weightedInputs
-            double costDeriv = lossFunction.derivApply(outputLayer.activations[i], expectedOutputs[i]);
-            double activationDeriv = outputLayer.activation.derivApply(outputLayer.weightedSums, i);
-            partialDerivs[i] = activationDeriv * costDeriv;
-        }
-
-        return partialDerivs;
-    }
-
     public NeuralNetwork addLayer(int nodeCount, ActivationFunction activationFunction) {
         Layer newLayer = new Layer(layers.getLast().nodeCount, nodeCount, activationFunction);
         layers.getLast().nextLayer = newLayer;
@@ -122,7 +96,7 @@ public class NeuralNetwork {
     public void updateAllGradients(double[] inputs, double[] expectedOutputs) {
         execute(inputs);
 
-        double[] costDerivStep = firstCostDerivStep(expectedOutputs);
+        double[] costDerivStep = lossFunction.derivApply(layers.getLast(), expectedOutputs);
 
         Layer outputLayer = layers.getLast();
         outputLayer.updateGradients(costDerivStep);

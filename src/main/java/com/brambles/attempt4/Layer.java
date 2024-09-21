@@ -27,6 +27,13 @@ public class Layer {
         activations         = new double[nodeCount];
         inputs              = new double[inputCount];
 
+        for (int i = 0; i < weights.length; i++) {
+            for (int j = 0; j < weights[i].length; ++j)
+                weights[i][j] = Math.random();
+
+            biases[i] = Math.random();
+        }
+
         this.nodeCount    = nodeCount;
         this.inputCount   = inputCount;
         this.activation   = activation;
@@ -59,7 +66,7 @@ public class Layer {
         return nextLayer != null ? nextLayer.forward(activations) : activations;
     }
 
-    double[] evalForward(double[] inputs) {
+    public double[] evalForward(double[] inputs) {
         double[] layerSums = new double[nodeCount];
 
         for (int i_node = 0; i_node < nodeCount; ++i_node) {

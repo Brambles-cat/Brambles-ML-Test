@@ -5,6 +5,7 @@ target/
 
 src/main/python/other_stuff
 outputs
+__pycache__
 
 ### IntelliJ IDEA ###
 .idea
